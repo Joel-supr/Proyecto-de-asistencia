@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Asistencia</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .dashboard-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        h1 { color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; }
+        .link-compartir { background-color: #ffc107; padding: 10px; border-radius: 4px; font-weight: bold; margin-bottom: 20px; display: inline-block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #e9ecef; color: #495057; }
+        .logout-btn { float: right; padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin-left: 15px; }
+        .logout-btn:hover { background-color: #c82333; }
+        .welcome-header { display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="welcome-header">
+            <h1>Bienvenido, Profesor</h1> 
+            <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a>
+        </div>
+        
+        <p class="link-compartir">
+            Link para Asistencia (Clase Ejemplo, cambiar el ID): 
+            <a href="{{ url_for('asistencia', clase_id='Clase_101') }}" target="_blank">
+                {{ url_for('asistencia', clase_id='Clase_101', _external=true) }}
+            </a>
+        </p>
+
+        <h2>Registros de Asistencia Tomada</h2>
+        
+        {% if registros %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Clase ID</th>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro.fecha }}</td>
+                        <td>{{ registro.clase_id }}</td>
+                        <td>{{ registro.apellido }}</td>
+                        <td>{{ registro.nombre }}</td>
+                        <td>{{ registro.dni }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay registros de asistencia guardados aún.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

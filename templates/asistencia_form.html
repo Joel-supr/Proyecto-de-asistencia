@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar Asistencia - Clase: {{ clase_id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #e6f3ff; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .asistencia-box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); width: 350px; text-align: center; border-top: 5px solid #007bff; }
+        h1 { color: #007bff; margin-bottom: 5px; font-size: 1.8em; }
+        p.clase-info { margin-bottom: 25px; font-weight: bold; color: #555; font-size: 1.1em; }
+        input[type="text"] { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { background-color: #28a745; color: white; padding: 12px 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; width: 100%; transition: background-color 0.2s; }
+        button:hover { background-color: #1e7e34; }
+        /* Mensajes de feedback (gestionados por Flask) */
+        .flash { padding: 15px; margin-bottom: 20px; border-radius: 6px; text-align: left; font-weight: bold; list-style: none; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="asistencia-box">
+        <h1>Registro de Asistencia</h1>
+        <p class="clase-info">Clase: **{{ clase_id | upper }}**</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes" style="padding: 0;">
+                {% for category, message in messages %}
+                    <li class="flash {{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('asistencia', clase_id=clase_id) }}">
+            <input type="text" name="apellido" placeholder="Apellido(s)" required>
+            <input type="text" name="nombre" placeholder="Nombre(s)" required>
+            <input type="text" name="dni" placeholder="DNI (Documento de Identidad)" required>
+            <button type="submit">Marcar Asistencia</button>
+        </form>
+    </div>
+</body>
+</html>
