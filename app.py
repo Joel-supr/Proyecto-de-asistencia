@@ -179,4 +179,4 @@ if __name__ == '__main__':
     # Esta línea DEBE estar al final.
     app.run(debug=True)
     # Codigo que hace arrancar en programa, Este debe ser ejecutado en la terminal.
-    #   .\venv\Scripts\python -m flask --app app run
+    #   flask --app app run
